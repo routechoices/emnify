@@ -1,0 +1,31 @@
+#! ./env/bin/python3
+import emnify
+
+if __name__ == "__main__":
+    auth_token = emnify.get_token()
+    sim_list = emnify.list_suspended_sims(auth_token)
+    if not sim_list:
+        print("No device to activate")
+        exit(0)
+
+    for i, sim in enumerate(sim_list):
+        print(f"{i+1}: {sim['name']}")
+
+    while True:
+        try:
+            val = input("Enter device to activate: ")
+        except KeyboardInterrupt:
+            exit(0)
+        if val == "q":
+            exit(0)
+        try:
+            i = int(val) - 1
+            assert 0 <= i < len(sim_list)
+        except Exception:
+            print("Invalid choice...")
+            continue
+        sim = sim_list[i]
+        sim_id = sim["data"]["id"]
+        sim_name = sim["name"]
+        if emnify.activate_sim(auth_token, sim_id):
+            print(f"Device {sim_name} activated...")
