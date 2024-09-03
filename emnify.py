@@ -10,7 +10,8 @@ def get_token():
     }
     r = requests.post(
         "https://cdn.emnify.net//api/v1/authenticate",
-        data=json.dumps(auth_data)
+        data=json.dumps(auth_data),
+        headers={"Content-Type": "application/json"},
     )
     return r.json()["auth_token"]
 
