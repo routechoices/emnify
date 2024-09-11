@@ -87,7 +87,7 @@ def cli_enable_sims(args):
         sim_name = sim["name"]
         if sim['data']['status']['id'] == 1:
             print(f"Device {sim_name} already active...")
-        elif suspend_sim(auth_token, sim_id):
+        elif activate_sim(auth_token, sim_id):
             print(f"Device {sim_name} activated...")
         else:
             print(f"Fail to activate device {sim_name}...")
