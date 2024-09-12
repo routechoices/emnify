@@ -71,7 +71,10 @@ def cli_list_sims(args):
         exit(0)
 
     for i, sim in enumerate(sim_list):
-        print(f"{(i+1): >3}: {sim['name']: <8} {('ON' if sim['data']['status']['id'] == 1 else 'OFF'):>3}")
+        print(
+            f"{(i+1): >3}: {sim['name']: <8} {('ON' if sim['data']['status']['id'] == 1 else 'OFF'):>3}",
+            end=" | " if i % 3 != 2 else " |\r\n"
+        )
     exit(0)
 
 
