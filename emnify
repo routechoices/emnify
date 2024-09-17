@@ -50,10 +50,34 @@ def activate_sim(auth_token, sim_id):
     return r.status_code // 100 == 2
 
 
+def activate_endpoint(auth_token, endpoint_id):
+    r = requests.patch(
+        f"https://cdn.emnify.net/api/v1/endpoint/{endpoint_id}",
+        data=json.dumps({"status": {"id": 0}}),
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {auth_token}"
+        }
+    )
+    return r.status_code // 100 == 2
+
+
 def suspend_sim(auth_token, sim_id):
     r = requests.patch(
         f"https://cdn.emnify.net/api/v1/sim/{sim_id}",
         data=json.dumps({"status": {"id": 2}}),
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {auth_token}"
+        }
+    )
+    return r.status_code // 100 == 2
+    
+
+def suspend_endpoint(auth_token, endpoint_id):
+    r = requests.patch(
+        f"https://cdn.emnify.net/api/v1/endpoint/{endpoint_id}",
+        data=json.dumps({"status": {"id": 1}}),
         headers={
             "Content-Type": "application/json",
             "Authorization": f"Bearer {auth_token}"
@@ -87,10 +111,11 @@ def cli_enable_sims(args):
             continue
         sim = sim_list[sim_idx - 1]
         sim_id = sim["data"]["id"]
+        enpoint_id = sim["data"]["endpoint"]["id"]
         sim_name = sim["name"]
         if sim['data']['status']['id'] == 1:
             print(f"Device {sim_name} already active...")
-        elif activate_sim(auth_token, sim_id):
+        elif activate_sim(auth_token, sim_id) and activate_endpoint(auth_token, endpoint_id):
             print(f"Device {sim_name} activated...")
         else:
             print(f"Fail to activate device {sim_name}...")
@@ -106,10 +131,11 @@ def cli_disable_sims(args):
             continue
         sim = sim_list[sim_idx - 1]
         sim_id = sim["data"]["id"]
+        enpoint_id = sim["data"]["endpoint"]["id"]
         sim_name = sim["name"]
         if sim['data']['status']['id'] == 2:
             print(f"Device {sim_name} already suspended...")
-        elif suspend_sim(auth_token, sim_id):
+        elif suspend_sim(auth_token, sim_id) and suspend_endpoint(auth_token, endpoint_id):
             print(f"Device {sim_name} suspended...")
         else:
             print(f"Fail to suspend device {sim_name}...")
