@@ -111,7 +111,7 @@ def cli_enable_sims(args):
             continue
         sim = sim_list[sim_idx - 1]
         sim_id = sim["data"]["id"]
-        enpoint_id = sim["data"]["endpoint"]["id"]
+        endpoint_id = sim["data"]["endpoint"]["id"]
         sim_name = sim["name"]
         if sim['data']['status']['id'] == 1:
             print(f"Device {sim_name} already active...")
@@ -131,7 +131,7 @@ def cli_disable_sims(args):
             continue
         sim = sim_list[sim_idx - 1]
         sim_id = sim["data"]["id"]
-        enpoint_id = sim["data"]["endpoint"]["id"]
+        endpoint_id = sim["data"]["endpoint"]["id"]
         sim_name = sim["name"]
         if sim['data']['status']['id'] == 2:
             print(f"Device {sim_name} already suspended...")
