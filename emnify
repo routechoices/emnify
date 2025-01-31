@@ -10,13 +10,11 @@ import os
 import json
 from dotenv import dotenv_values
 import requests
-
-
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+from pathlib import Path
 
 
 def get_token():
-    config = dotenv_values(os.path.join(BASEDIR, ".env"))
+    config = dotenv_values(Path.home() / ".secrects" / "emnify.ini")
     auth_data = {
         "application_token": config["API_TOKEN"]
     }
