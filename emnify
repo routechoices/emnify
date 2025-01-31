@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 def get_token():
-    config = dotenv_values(Path.home() / ".secrects" / "emnify.ini")
+    config = dotenv_values(Path.home() / ".secrets" / "emnify.ini")
     auth_data = {
         "application_token": config["API_TOKEN"]
     }
